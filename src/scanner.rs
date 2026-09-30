@@ -985,15 +985,10 @@ mod tests {
         let python = temp.path().join("python");
         fs::create_dir_all(python.join(".venv")).unwrap();
         fs::write(python.join(".venv/pyvenv.cfg"), "home = /python").unwrap();
-        for cache in [
-            "__pycache__",
-            ".pytest_cache",
-            ".mypy_cache",
-            ".ruff_cache",
-            ".rumdl_cache",
-        ] {
+        for cache in ["__pycache__", ".pytest_cache", ".mypy_cache", ".ruff_cache"] {
             fs::create_dir_all(python.join(cache)).unwrap();
         }
+        fs::create_dir_all(temp.path().join("markdown/.rumdl_cache")).unwrap();
 
         let ruby = temp.path().join("ruby");
         fs::create_dir_all(ruby.join("vendor/bundle")).unwrap();

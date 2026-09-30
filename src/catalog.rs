@@ -689,6 +689,7 @@ pub(crate) fn global_paths() -> Vec<GlobalPath> {
         ("DENO_DIR", "deno-cache", "javascript", true),
         ("GOCACHE", "go-build-cache", "go", false),
         ("GOMODCACHE", "go-module-cache", "go", true),
+        ("MISE_CACHE_DIR", "mise-cache", "other", true),
         (
             "TF_PLUGIN_CACHE_DIR",
             "terraform-plugin-cache",
@@ -725,6 +726,7 @@ fn safe_dynamic_global_path(variable: &str, path: &Path, home: Option<&Path>) ->
         "DENO_DIR" => leaf.contains("deno"),
         "GOCACHE" => leaf.contains("go-build") || leaf.contains("gocache"),
         "GOMODCACHE" => leaf == "mod" || leaf.contains("gomod"),
+        "MISE_CACHE_DIR" => leaf.contains("mise"),
         "TF_PLUGIN_CACHE_DIR" => leaf.contains("terraform") || leaf.contains("plugin"),
         _ => false,
     }
@@ -799,6 +801,16 @@ mod tests {
             "GOCACHE",
             Path::new("/var/cache/go-build"),
             None
+        ));
+        assert!(safe_dynamic_global_path(
+            "MISE_CACHE_DIR",
+            Path::new("/var/cache/mise"),
+            Some(home)
+        ));
+        assert!(!safe_dynamic_global_path(
+            "MISE_CACHE_DIR",
+            Path::new("/home/developer/.config"),
+            Some(home)
         ));
     }
 
