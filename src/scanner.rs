@@ -985,7 +985,13 @@ mod tests {
         let python = temp.path().join("python");
         fs::create_dir_all(python.join(".venv")).unwrap();
         fs::write(python.join(".venv/pyvenv.cfg"), "home = /python").unwrap();
-        for cache in ["__pycache__", ".pytest_cache", ".mypy_cache", ".ruff_cache"] {
+        for cache in [
+            "__pycache__",
+            ".pytest_cache",
+            ".mypy_cache",
+            ".ruff_cache",
+            ".rumdl_cache",
+        ] {
             fs::create_dir_all(python.join(cache)).unwrap();
         }
 
@@ -1047,6 +1053,7 @@ mod tests {
             "pytest-cache",
             "mypy-cache",
             "ruff-cache",
+            "rumdl-cache",
             "bundler-vendor",
             "cmake-build",
             "cabal-dist",
